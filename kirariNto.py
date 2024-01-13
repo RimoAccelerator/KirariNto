@@ -1,12 +1,12 @@
 import re, os, sys, subprocess
 import numpy
 from pyscf import gto, scf
-from pyscf.geomopt import berny_solver, geometric_solver, as_pyscf_method
+from pyscf.geomopt import geometric_solver, as_pyscf_method
 from math import sqrt
 import argparse
 
 print('''
-    Welcome to KirariNto. It is a program that traces the electronic state during optimization, by comparing the NTO overlap between each 
+    Welcome to KirariNto. It is a program that tracks the electronic state during optimization, by comparing the NTO overlap between each 
     state with the target state of the previous geometry. It is based on a modified algorithm of Marco Campetella and Juan Sanz Garcia (10.1002/jcc.26162).
     Gaussian and ORCA are currently supported.
     A typical command:
@@ -16,14 +16,12 @@ print('''
     KIRARINTO_MULTIWFN
     KIRARINTO_GAUSSIAN
     KIRARINTO_FORMCHK
-    KIRARINTO_MULTIWFN
     KIRARINTO_ORCA
     KIRARINTO_ORCA2MKL
     Examples:
     export KIRARINTO_MULTIWFN=~/Multiwfn_3.8_dev_bin_Linux_noGUI/Multiwfn
     export KIRARINTO_GAUSSIAN=~/g16/g16
     export KIRARINTO_FORMCHK=~/g16/formchk
-    export KIRARINTO_MULTIWFN=~/Multiwfn_3.8_dev_bin_Linux_noGUI/Multiwfn_noGUI
     export KIRARINTO_ORCA=/opt/orca5/orca
     export KIRARINTO_ORCA2MKL=/opt/orca5/orca_2mkl
     ''')
@@ -348,7 +346,6 @@ def writeGjf(Geom, Header, Tail, Name):
         f.write('{ele}  {x:.8f}  {y:.8f}  {z:.8f}'.format(
             ele=LIST_ELEMENT[i], x=float(Geom[i * 3]), y=float(Geom[i * 3 + 1]), z=float(Geom[i * 3 + 2])))
         f.write('\n')
-    f.write('\n')
     f.write(Tail)
     f.write('\n')
     f.close()
