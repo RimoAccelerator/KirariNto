@@ -84,7 +84,7 @@ TC
 
 ```! blyp def2-sv(p) def2/j
 %pal nprocs 8 end
-%tddft nroots 5 iroot 1 end
+%tddft nroots 5 iroot 1 tprint 1E-8 end
 * xyz 0 1
  C                  1.49653098   -0.03970163    0.25798558
  C                  0.96661422    1.10990407   -0.32719382
