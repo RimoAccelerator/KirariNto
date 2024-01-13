@@ -1,6 +1,8 @@
 # KirariNto
 **KirariNto** is a program that traces the electronic state during TD-DFT geometry optimization, by comparing the NTO overlap between each state with the target state of the previous geometry. It is based on a modified algorithm of Marco Campetella and Juan Sanz Garcia (10.1002/jcc.26162). Gaussian and ORCA are currently supported.
 
+![image](https://github.com/RimoAccelerator/KirariNto/blob/main/kirarinto_logo.png)
+
 # Requirements
 Linux operation system
 
