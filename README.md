@@ -10,7 +10,7 @@ Linux operation system
 
   PySCF
   
-  Geometri
+  geomeTRIC
   
   PyBerny
   
