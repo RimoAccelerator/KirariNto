@@ -1,5 +1,5 @@
 # KirariNto： a Python Package for Excited State Tracking during Geometry Optimization, through NTO Overlap Method
-**KirariNto** is a program that traces the electronic state during TD-DFT geometry optimization, by comparing the NTO overlap between each state with the target state of the previous geometry. It is based on a modified algorithm of Marco Campetella and Juan Sanz Garcia (10.1002/jcc.26162). Gaussian and ORCA are currently supported.
+**KirariNto** is a program that traces the electronic state during TD-DFT geometry optimization, by comparing the NTO overlap between each state with the target state of the previous geometry. It is based on a modified SDNTO algorithm of Marco Campetella and Juan Sanz Garcia (10.1002/jcc.26162). Gaussian and ORCA are currently supported. As compared to the original SDNTO method, it is less approximated, and is able to deal with the situations where the change in geometry causes permutation in orbitals.
 
 ![image](https://github.com/RimoAccelerator/KirariNto/blob/main/kirarinto_logo.png)
 
