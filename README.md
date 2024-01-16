@@ -52,15 +52,15 @@ export KIRARINTO_ORCA=/opt/orca5/orca
 export KIRARINTO_ORCA2MKL=/opt/orca5/orca_2mkl
 ```
 
-2. Prepare an input file for a TD-DFT single point calculation of your initial geometry. Number of states and the interested state should be set explicitly. Example:
+2. Prepare an input file for a TD-DFT **single point** calculation of your initial geometry. Number of states and the interested state should be set explicitly. Example:
 
 (Gaussian)
 
 ```
 %mem=8GB
 %nprocshared=8
-%chk=u_td_1.chk
-# td=(nstates=3,root=1) b3lyp sto-3g em=gd3bj iop(9/40=4)
+%chk=xxx.chk
+# td=(nstates=3,root=1) b3lyp def2svp em=gd3bj iop(9/40=4)
 
 TC
 
@@ -82,7 +82,7 @@ TC
 
 (ORCA)
 
-```! blyp def2-sv(p) def2/j
+```! b3lyp def2-sv(p) 
 %pal nprocs 8 end
 %tddft nroots 5 iroot 1 tprint 1E-8 end
 * xyz 0 1
