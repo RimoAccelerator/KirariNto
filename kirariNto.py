@@ -366,22 +366,25 @@ def align(Geom1, Geom2): #transform Geom1 to align with Geom2
     xn = numpy.zeros([NUM_ATOM, 3])
     yn = numpy.zeros([NUM_ATOM, 3])
     geom1Aligned = Geom1[:]
-    for i in range(NUM_ATOM):
-        xn[i, 0:] =Geom1[i*3 : i*3+3]
-        yn[i, 0:] =Geom2[i*3 : i*3+3]
-    #Kabsch algorithm in 10.1107/S0567739476001873 for alignment
-    R_matrix = yn.T @ xn
-    RT_R = R_matrix.T @ R_matrix
-    mius, A_matrix = numpy.linalg.eig(RT_R)
-    mius = numpy.real(mius)
-    mius = numpy.diag(mius)
-    for i in range(3):
-        mius[i, i] = 1/sqrt(mius[i, i])
-    B_matrix = (mius @ (R_matrix @ A_matrix).T)
-    U_matrix = B_matrix.T @ A_matrix
-    xn = U_matrix @ xn.T
-    for i in range(NUM_ATOM):
-        geom1Aligned[i*3 : i*3+3] = xn.T[i, 0:]
+    try:
+        for i in range(NUM_ATOM):
+            xn[i, 0:] =Geom1[i*3 : i*3+3]
+            yn[i, 0:] =Geom2[i*3 : i*3+3]
+        #Kabsch algorithm in 10.1107/S0567739476001873 for alignment
+        R_matrix = yn.T @ xn
+        RT_R = R_matrix.T @ R_matrix
+        mius, A_matrix = numpy.linalg.eig(RT_R)
+        mius = numpy.real(mius)
+        mius = numpy.diag(mius)
+        for i in range(3):
+            mius[i, i] = 1/sqrt(mius[i, i])
+        B_matrix = (mius @ (R_matrix @ A_matrix).T)
+        U_matrix = B_matrix.T @ A_matrix
+        xn = U_matrix @ xn.T
+        for i in range(NUM_ATOM):
+            geom1Aligned[i*3 : i*3+3] = xn.T[i, 0:]
+    except:
+        print('Warning: Geometry alignment failed in this step. Although in general it will have no influence, a double check on the results is recommended.')
     return geom1Aligned
 
 def runEachStepForGaussian(mol):
@@ -518,7 +521,14 @@ def main():
         HEADER = HEADER.replace('#', '#p') 
     popen('mkdir JOBS')
     
-    mol = gto.M(buildPySCFMolString(), unit='Angstrom', verbose = 0, basis='def2-svp')
+    # PySCF requires a basis set that is available for all the elements contained, although it does not participate in calculation
+    mol = gto.Mole()
+    mol.atom = buildPySCFMolString()
+    mol.basis = 'def2-svp'
+    mol.verbose = 0
+    mol.nelectron = 0 
+    # PySCF requires the charge and multiplicities be set. As PySCF does not do any calculation, it can be simply solved by setting nelectron = 0
+    mol.build()
     fake_method = as_pyscf_method(mol, runEachStep)
 
     params = {
@@ -538,4 +548,3 @@ def main():
 
 
 main()
-#compare('u_td_1.fchk', 'u_td_2.fchk', 1,  3)
