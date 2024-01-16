@@ -11,7 +11,7 @@ print('''
     Gaussian and ORCA are currently supported.
     A typical command:
     python3 kirariNto.py task.gjf
-    Where task.gjf is an input file for TD-DFT single calculation of your initial geometry. nstates and nroot should be set explicitly.
+    Where task.gjf is an input file for TD-DFT **single point** calculation of your initial geometry. nstates and nroot should be set explicitly.
     KirariNto invokes the program and Multiwfn, and the following environment variants are required:
     KIRARINTO_MULTIWFN
     KIRARINTO_GAUSSIAN
@@ -96,7 +96,7 @@ def setOccForElectron(fchkInput, moldenOutput, eigens, indexOfHOMO):
     popen(f'echo "{commandStr}" | {PATH_MULTIWFN} {fchkInput}')
 
 def CalcOverlap(molden1, molden2):
-    f = popen(f'echo "5\n0\n1\n*,{molden2}\n1\n{GRID}" | {PATH_MULTIWFN} {molden1}')
+    f = popen(f'echo "\n5\n0\n1\n*,{molden2}\n1\n{GRID}" | {PATH_MULTIWFN} {molden1}')
     isIntegral = False
     for l in f:
         if 'Summing up all value and multiply differential element' in l:
@@ -518,7 +518,7 @@ def main():
         HEADER = HEADER.replace('#', '#p') 
     popen('mkdir JOBS')
     
-    mol = gto.M(buildPySCFMolString(), unit='Angstrom', verbose = 0)
+    mol = gto.M(buildPySCFMolString(), unit='Angstrom', verbose = 0, basis='def2-svp')
     fake_method = as_pyscf_method(mol, runEachStep)
 
     params = {
