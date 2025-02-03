@@ -16,7 +16,7 @@ Linux operation system
   
   Numpy
 
-(For Python 3.6 or earlier version, please change *universal_newlines=True* (Line 55)  to *universal_newlines=True*).
+(For Python 3.6 or earlier version, please change *text=True* (Line 55)  to *universal_newlines=True*).
 **Programs:**
 
 Multiwfn
